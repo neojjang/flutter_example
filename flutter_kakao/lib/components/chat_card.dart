@@ -29,7 +29,10 @@ class ChatCard extends StatelessWidget {
                 ),
                 title: Text(
                   chat.title,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
                 ),
                 subtitle: Text(chat.content),
                 contentPadding: EdgeInsets.all(0),
@@ -44,22 +47,18 @@ class ChatCard extends StatelessWidget {
                     fontSize: 12,
                   ),
                 ),
-                SizedBox(
-                  height: 5,
-                ),
+                SizedBox(height: 5),
                 (chat.count != "0")
                     ? Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Color(0xFFde6344)),
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color(0xFFde6344),
+                        ),
                         child: Text(
                           chat.count,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 12),
                         ),
                       )
                     : Container()
