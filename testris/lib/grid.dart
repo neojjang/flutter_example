@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:testris/pixel.dart';
 
 class MyGrid extends StatefulWidget {
@@ -35,42 +33,23 @@ class _MyGridState extends State<MyGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 180,
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 10),
-          itemBuilder: (BuildContext context, int index) {
-            for (var i = 0; i < pieceColor.length; i++) {
-              if (widget.landedPieces[i].contains(index)) {
-                return MyPixel(
-                  color: pieceColor[i],
-                  child: Text(
-                    index.toString(),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                );
-              }
-              if (widget.newPiece.contains(index)) {
-                return MyPixel(
-                  color: widget.newColor,
-                  child: Text(
-                    index.toString(),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                );
-              } else {
-                return MyPixel(
-                  color: Colors.black,
-                  child: Text(
-                    index.toString(),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                );
-              }
-            }
-          }),
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: widget.numberOfSquares,
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 10),
+      itemBuilder: (BuildContext context, int index) {
+        for (var i = 0; i < pieceColor.length; i++) {
+          if (widget.landedPieces[i].contains(index)) {
+            return MyPixel(color: pieceColor[i], child: null);
+          }
+        }
+        if (widget.newPiece.contains(index)) {
+          return MyPixel(color: widget.newColor, child: null);
+        } else {
+          return MyPixel(color: Colors.black, child: null);
+        }
+      },
     );
   }
 }

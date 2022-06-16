@@ -47,74 +47,83 @@ class _MyGameState extends State<MyGame> {
   static int number = 0;
   double count = 0;
 
-  static int numberOfSquares = 180;
+  static int numberOfSquares = 170;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: MyGrid(
-            numberOfSquares: numberOfSquares,
-            landedPieces: landedPosColor,
-            newPiece: chosenPiece,
-            newColor: pieceColor[number % pieces.length],
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: MyGrid(
+              numberOfSquares: numberOfSquares,
+              landedPieces: landedPosColor,
+              newPiece: chosenPiece,
+              newColor: pieceColor[number % pieces.length],
+            ),
           ),
-        ),
-        Container(
-          height: 100,
-          child: Row(
-            children: [
-              Expanded(
-                child: GestureDetector(
-                  onTap: startGame,
-                  child: MyButton(
-                    child: const Text(
-                      'Play',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
+          Container(
+            height: 50,
+            color: Colors.grey,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onTap: startGame,
+                    child: MyButton(
+                      child: const Text(
+                        'Play',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: moveLeft,
-                  child: MyButton(
-                    child: const Icon(
-                      Icons.arrow_left,
-                      color: Colors.white,
-                      size: 50,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: moveLeft,
+                    child: MyButton(
+                      child: const Icon(
+                        Icons.arrow_left,
+                        color: Colors.white,
+                        size: 50,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: moveRight,
-                  child: const Icon(
-                    Icons.arrow_right,
-                    color: Colors.white,
-                    size: 50,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: moveRight,
+                    child: MyButton(
+                      child: const Icon(
+                        Icons.arrow_right,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: rotatePiece,
-                  child: const Icon(
-                    Icons.rotate_right,
-                    color: Colors.white,
-                    size: 30,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: rotatePiece,
+                    child: MyButton(
+                      child: const Icon(
+                        Icons.rotate_right,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -158,7 +167,7 @@ class _MyGameState extends State<MyGame> {
 
   void moveRight() {
     if (chosenPiece.any(
-        (element) => (element) % 10 == 0 || landed.contains(element + 1))) {
+        (element) => (element + 1) % 10 == 0 || landed.contains(element + 1))) {
     } else {
       setState(() {
         for (var i = 0; i < chosenPiece.length; i++) {

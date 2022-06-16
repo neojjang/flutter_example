@@ -16,7 +16,6 @@ class MyPixel extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
         child: Container(
           color: color,
-          child: child,
         ),
       ),
     );
