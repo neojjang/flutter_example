@@ -44,9 +44,30 @@ class JitsiMeetMethods {
         ..featureFlags.addAll(featureFlags);
 
       _firestoreMethods.addToMeetingHistory(roomName);
-      await JitsiMeet.joinMeeting(options);
+      await JitsiMeet.joinMeeting(options,
+          listener: JitsiMeetingListener(
+              onConferenceWillJoin: _onConferenceWillJoin,
+              onConferenceJoined: _onConferenceJoined,
+              onConferenceTerminated: _onConferenceTerminated,
+              onError: _onError));
     } catch (error) {
       print("error: $error");
     }
+  }
+
+  _onConferenceWillJoin(Map message) {
+    print("onConferenceWillJoin : ${message}");
+  }
+
+  _onConferenceJoined(Map message) {
+    print("_onConferenceJoined : ${message}");
+  }
+
+  _onConferenceTerminated(Map message) {
+    print("_onConferenceTerminated : ${message}");
+  }
+
+  _onError(error) {
+    print(error);
   }
 }
