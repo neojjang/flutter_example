@@ -9,6 +9,10 @@ import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/text_field_input.dart';
 
+import '../responsive/mobile_screen_layout.dart';
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -207,7 +211,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (res != 'Success') {
       showSnackBar(res, context);
     } else {
-      showSnackBar('정상적으로 등록 되었습니다.\n등록하신 이메일을 사용하여 로그인 해주세요.', context);
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: ((context) => const ResponsiveLayout(
+                webScreenLayout: WebScreenLayout(),
+                mobileScreenLayout: MobileScreenLayout(),
+              )),
+        ),
+      );
     }
   }
 
