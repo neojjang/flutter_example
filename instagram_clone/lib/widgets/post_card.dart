@@ -87,6 +87,7 @@ class _PostCardState extends State<PostCard> {
                                           onTap: () async {
                                             await FirestoreMethods().deletePost(
                                                 widget.snap['postId']);
+                                            Navigator.of(context).pop();
                                           },
                                           child: Container(
                                             padding: const EdgeInsets.symmetric(
