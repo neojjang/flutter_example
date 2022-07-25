@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:instagram_clone/utils/colors.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -47,7 +51,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       isGreaterThanOrEqualTo: searchController.text)
                   .get(),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) {
+                print(snapshot.connectionState);
+                if (!snapshot.hasData ||
+                    snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
@@ -58,8 +64,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     return ListTile(
                       leading: CircleAvatar(
                         backgroundImage: NetworkImage(
-                            (snapshot.data! as dynamic).docs[index]
-                                ['photoUrl']),
+                          (snapshot.data! as dynamic).docs[index]['photoUrl'],
+                        ),
                       ),
                       title: Text(
                           (snapshot.data! as dynamic).docs[index]['username']),
@@ -68,7 +74,36 @@ class _SearchScreenState extends State<SearchScreen> {
                 );
               },
             )
-          : Text('Posts'),
+          : FutureBuilder(
+              future: FirebaseFirestore.instance
+                  .collection('posts')
+                  .orderBy('datePublished', descending: true)
+                  .get(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+
+                return GridView.custom(
+                  gridDelegate: SliverQuiltedGridDelegate(
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
+                      pattern: [
+                        QuiltedGridTile(2, 2),
+                        QuiltedGridTile(1, 1),
+                        QuiltedGridTile(1, 1),
+                      ]),
+                  childrenDelegate: SliverChildBuilderDelegate(
+                    (context, index) => Image.network(
+                      (snapshot.data! as dynamic).docs[index]['postUrl'],
+                    ),
+                    childCount: (snapshot.data! as dynamic).docs.length,
+                  ),
+                );
+              }),
     );
   }
 }
