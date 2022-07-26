@@ -32,7 +32,7 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
-    final model.User user = Provider.of<UserProvider>(context).getUser;
+    final model.User? user = Provider.of<UserProvider>(context).getUser;
 
     return Container(
       color: mobileBackgroundColor,
@@ -109,7 +109,7 @@ class _PostCardState extends State<PostCard> {
           // IMAGE SECTION
           GestureDetector(
             onDoubleTap: () async {
-              if (!widget.snap['likes'].contains(user.uid)) {
+              if (!widget.snap['likes'].contains(user!.uid)) {
                 setState(() {
                   isLikeAnimating = true;
                 });
@@ -155,7 +155,7 @@ class _PostCardState extends State<PostCard> {
           Row(
             children: [
               LikeAnimation(
-                isAnimating: widget.snap['likes'].contains(user.uid),
+                isAnimating: widget.snap['likes'].contains(user!.uid),
                 smallLike: true,
                 child: IconButton(
                   onPressed: (() async {
