@@ -16,6 +16,6 @@ List<Widget> homeScreenItems = [
     child: Text('favorite'),
   ),
   ProfileScreen(
-    uid: FirebaseAuth.instance.currentUser!.uid,
+    uid: null, // FirebaseAuth.instance.currentUser!.uid
   ),
 ];

@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:instagram_clone/resources/auth_methods.dart';
 import 'package:instagram_clone/resources/firestore_methods.dart';
+import 'package:instagram_clone/screens/login_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
 import 'package:instagram_clone/utils/utils.dart';
 import 'package:instagram_clone/widgets/follow_button.dart';
@@ -30,6 +32,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("uid=${FirebaseAuth.instance.currentUser!.uid}");
+    print("widget.uid=${widget.uid}");
     getData();
   }
 
@@ -79,16 +83,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    FirebaseAuth.instance.currentUser!.uid ==
-                                            widget.uid
-                                        ? FollowButton(
-                                            func: () {},
-                                            backgroundColor:
-                                                mobileBackgroundColor,
-                                            borderColor: Colors.grey,
-                                            text: 'Edit Profile',
-                                            textColor: primaryColor,
-                                          )
+                                    (FirebaseAuth.instance.currentUser!.uid ==
+                                                widget.uid ||
+                                            widget.uid == null)
+                                        ? Column(children: [
+                                            FollowButton(
+                                              func: () {},
+                                              backgroundColor:
+                                                  mobileBackgroundColor,
+                                              borderColor: Colors.grey,
+                                              text: 'Edit Profile',
+                                              textColor: primaryColor,
+                                            ),
+                                            FollowButton(
+                                              func: () async {
+                                                await AuthMethods().signOut();
+                                                Navigator.of(context)
+                                                    .pushReplacement(
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const LoginScreen(),
+                                                  ),
+                                                );
+                                              },
+                                              backgroundColor:
+                                                  mobileBackgroundColor,
+                                              borderColor: Colors.grey,
+                                              text: 'Sign Out',
+                                              textColor: primaryColor,
+                                            )
+                                          ])
                                         : isFollowing
                                             ? FollowButton(
                                                 func: () async {
@@ -227,11 +251,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       isLoading = true;
     });
     try {
-      //
-      DocumentSnapshot snap = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(widget.uid)
-          .get();
+      var uid = (widget.uid != null)
+          ? widget.uid
+          : FirebaseAuth.instance.currentUser!.uid;
+      DocumentSnapshot snap =
+          await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
       var postSnap = await FirebaseFirestore.instance
           .collection('posts')

@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:instagram_clone/screens/profile_screen.dart';
 import 'package:instagram_clone/utils/colors.dart';
+import 'package:instagram_clone/utils/global_variables.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -30,6 +31,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -100,7 +103,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       mainAxisSpacing: 8,
                       crossAxisSpacing: 8,
                       pattern: [
-                        QuiltedGridTile(2, 2),
+                        (width > webScreenSize)
+                            ? QuiltedGridTile(1, 1)
+                            : QuiltedGridTile(2, 2),
                         QuiltedGridTile(1, 1),
                         QuiltedGridTile(1, 1),
                       ]),
