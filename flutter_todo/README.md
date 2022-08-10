@@ -21,3 +21,6 @@ samples, guidance on mobile development, and a full API reference.
 - part2 : https://www.youtube.com/watch?v=6SaCntGgi5o&list=RDCMUC8aiILPy0NO5wwLaYEzImbw&start_radio=1&rv=6SaCntGgi5o&t=9128
 - part3 : https://www.youtube.com/watch?v=pQSTgf-6hDk&t=0s
 
+## blog 링크
+- https://www.dbestech.com/tutorials/flutter-local-notification-explained-for-ios-and-android#num_1
+
