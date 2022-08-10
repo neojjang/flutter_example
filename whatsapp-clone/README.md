@@ -28,3 +28,7 @@ After cloning this repository, migrate to ```whatsapp-flutter-ui``` folder. Ther
 ## Feedback
 
 If you have any feedback, please reach out to me at namanrivaan@gmail.com
+
+## 동영상
+- https://www.youtube.com/watch?v=yqwfP2vXWJQ&t=1s
+
